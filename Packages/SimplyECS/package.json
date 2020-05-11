@@ -1,0 +1,29 @@
+{
+  "name": "com.rasofiagames.simplyecs",
+  "version": "0.0.1",
+  "displayName": "Simply ECS",
+  "description": "Simply ECS is a simplified query system using ECS architecture as its base. Making it easy to query over your entities and track / interact with optimized lists filled with entities following the given list rules.",
+  "unity": "2018.3",
+  "unityRelease": "0b5",
+  "keywords": [
+    "ECS",
+    "Query",
+    "List Rules",
+    "Entity",
+    "Component",
+    "System"
+  ],
+  "author": {
+    "name": "Rasofia Games",
+    "email": "contact@rasofiagames.com",
+    "url": "http://rasofiagames.com"
+  },
+  "samples": [
+    {
+      "displayName": "Setup & Usage",
+      "description": "A small example showing the use of the Entity, EntityComponent and EntityFilter systems",
+      "path": "Samples"
+    }
+  ],
+  "type": "tool"
+}
