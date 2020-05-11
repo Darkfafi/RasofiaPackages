@@ -8,7 +8,7 @@ namespace Tests
 {
 	public class TestSuite
 	{
-		private const int TestAmount = 30000;
+		private const int TestAmount = 10000;
 
 		// A Test behaves as an ordinary method
 		[Test]
