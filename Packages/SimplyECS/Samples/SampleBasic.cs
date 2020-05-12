@@ -4,23 +4,23 @@ namespace RasofiaGames.SimplyECS.Sample
 {
 	public class SampleBasic : MonoBehaviour
 	{
-		IEntityFilter<HealthFilterData> _entityFilter;
+		IEntityFilter<CommercialFilterData> _entityFilter;
 		Building _building1;
 		Building _building2;
 
 		protected void Awake()
 		{
-			_entityFilter = EntityFilter<HealthFilterData>.Create(OnTracked, OnUntracked);
+			_entityFilter = EntityFilter<CommercialFilterData>.Create(OnTracked, OnUntracked);
 			_building1 = new Building(50);
 			_building2 = new Building(75);
 		}
 
-		private void OnTracked(HealthFilterData obj)
+		private void OnTracked(CommercialFilterData obj)
 		{
 			Debug.Log("Income Added: " + obj.Commercial.Income);
 		}
 
-		private void OnUntracked(HealthFilterData obj)
+		private void OnUntracked(CommercialFilterData obj)
 		{
 			Debug.Log("Income Removed: " + obj.Commercial.Income);
 		}
@@ -42,7 +42,7 @@ namespace RasofiaGames.SimplyECS.Sample
 		}
 
 		// This will make it so casting only occures when an entity is tracked or untracked by the EntityFilter, after that, all data is set and can be accessed directly.
-		public struct HealthFilterData : IFilterData
+		public struct CommercialFilterData : IFilterData
 		{
 			public CommercialComponent Commercial
 			{

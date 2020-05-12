@@ -41,6 +41,22 @@ namespace RasofiaGames.SimplyECS
 			Clean();
 		}
 
+		public void Flush()
+		{
+			if(_registerRoutine != null)
+			{
+				StopCoroutine(_registerRoutine);
+				_registerRoutine = null;
+			}
+
+			for(int i = 0, c = _entitiesToAdd.Count; i < c; i++)
+			{
+				InternalRegisterEntity(_entitiesToAdd[i]);
+			}
+
+			_entitiesToAdd.Clear();
+		}
+
 		public Entity[] GetAll()
 		{
 			return _entities.ToArray();
@@ -73,6 +89,11 @@ namespace RasofiaGames.SimplyECS
 
 		internal void Unregister(Entity entity)
 		{
+			if(_entitiesToAdd.Contains(entity))
+			{
+				InternalRegisterEntity(entity);
+			}
+
 			if(_entities.Remove(entity))
 			{
 				entity.DestroyEvent -= OnDestroyEvent;
@@ -100,20 +121,19 @@ namespace RasofiaGames.SimplyECS
 		private IEnumerator WaitToRegisterEntity()
 		{
 			yield return new WaitForEndOfFrame();
-			for(int i = 0, c = _entitiesToAdd.Count; i < c; i++)
+			Flush();
+		}
+
+		private void InternalRegisterEntity(Entity entity)
+		{
+			if(!entity.IsDestroyed && !_entities.Contains(entity))
 			{
-				Entity entity = _entitiesToAdd[i];
-				if(!entity.IsDestroyed && !_entities.Contains(entity))
-				{
-					_entities.Add(entity);
-					entity.DestroyEvent += OnDestroyEvent;
-					entity.AddedComponentEvent += OnComponentAddedEvent;
-					entity.RemovedComponentEvent += OnComponentRemovedEvent;
-					EntityTrackedEvent?.Invoke(entity);
-				}
+				_entities.Add(entity);
+				entity.DestroyEvent += OnDestroyEvent;
+				entity.AddedComponentEvent += OnComponentAddedEvent;
+				entity.RemovedComponentEvent += OnComponentRemovedEvent;
+				EntityTrackedEvent?.Invoke(entity);
 			}
-			_entitiesToAdd.Clear();
-			_registerRoutine = null;
 		}
 	}
 }

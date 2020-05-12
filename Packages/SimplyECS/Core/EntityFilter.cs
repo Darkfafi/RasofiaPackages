@@ -73,9 +73,10 @@ namespace RasofiaGames.SimplyECS
 
 		public void ForEach(Action<T> action)
 		{
-			foreach(T v in GetAllData())
+			T[] allData = GetAllData();
+			for(int i = 0, c = allData.Length; i < c; i++)
 			{
-				action(v);
+				action(allData[i]);
 			}
 		}
 

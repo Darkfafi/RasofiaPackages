@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace RasofiaGames.SimplyECS
 {
-	public abstract class Entity
+	public class Entity
 	{
 		public delegate void ComponentHandler(Entity entity, EntityComponent componentInstance);
 

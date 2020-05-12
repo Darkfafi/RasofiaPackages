@@ -14,6 +14,9 @@ namespace RasofiaGames.SimplyECS.Sample
 			_entityFilter = EntityFilter<HealthFilterData>.Create(new TestModule(), OnTracked, OnUntracked);
 			_character = new Character(50);
 			_character2 = new Character(75);
+
+			// Call Flush when you need the entities within the same frame, else the entities will be added to the system the next frame
+			// EntityTracker.Instance.Flush();
 		}
 
 		private void OnTracked(HealthFilterData obj)
