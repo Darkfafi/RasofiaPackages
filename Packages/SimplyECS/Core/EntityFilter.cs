@@ -64,6 +64,8 @@ namespace RasofiaGames.SimplyECS
 			EntityTracker.Instance.ForEach(ApplyTrackLogics);
 		}
 
+		public int Count => _filterData.Count;
+
 		public T[] GetAllData()
 		{
 			T[] entries = new T[_filterData.Count];
@@ -157,10 +159,13 @@ namespace RasofiaGames.SimplyECS
 
 	public interface IEntityFilter<T> : IEntityFilter where T : IFilterData
 	{
+		int Count
+		{
+			get;
+		}
+
 		T[] GetAllData();
-
 		void ForEach(Action<T> action);
-
 		void Clean(Action<T> trackedCallback, Action<T> untrackedCallback, bool callForCurrentEntries = true);
 	}
 

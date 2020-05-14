@@ -15,6 +15,7 @@ namespace RasofiaGames.SimplyECS
 			tracker.EntityUntrackedEvent += OnEntityUntrackedEvent;
 			tracker.EntityAddedComponentEvent += OnEntityAddedComponentEvent;
 			tracker.EntityRemovedComponentEvent += OnEntityRemovedComponentEvent;
+			tracker.EntityComponentEnabledStateChangedEvent += OnEntityComponentEnabledStateChangedEvent;
 		}
 
 		internal void DeInitModule()
@@ -26,6 +27,7 @@ namespace RasofiaGames.SimplyECS
 				tracker.EntityUntrackedEvent -= OnEntityUntrackedEvent;
 				tracker.EntityAddedComponentEvent -= OnEntityAddedComponentEvent;
 				tracker.EntityRemovedComponentEvent -= OnEntityRemovedComponentEvent;
+				tracker.EntityComponentEnabledStateChangedEvent -= OnEntityComponentEnabledStateChangedEvent;
 			}
 		}
 
@@ -62,6 +64,11 @@ namespace RasofiaGames.SimplyECS
 		}
 
 		private void OnEntityRemovedComponentEvent(Entity entity, EntityComponent component)
+		{
+			ExecuteValidation(entity);
+		}
+
+		private void OnEntityComponentEnabledStateChangedEvent(Entity entity, EntityComponent component)
 		{
 			ExecuteValidation(entity);
 		}

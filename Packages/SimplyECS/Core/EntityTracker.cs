@@ -12,6 +12,7 @@ namespace RasofiaGames.SimplyECS
 		public event Action<Entity> EntityTrackedEvent;
 		public event Action<Entity> EntityUntrackedEvent;
 
+		public event EntityComponentHandler EntityComponentEnabledStateChangedEvent;
 		public event EntityComponentHandler EntityAddedComponentEvent;
 		public event EntityComponentHandler EntityRemovedComponentEvent;
 
@@ -97,6 +98,7 @@ namespace RasofiaGames.SimplyECS
 			if(_entities.Remove(entity))
 			{
 				entity.DestroyEvent -= OnDestroyEvent;
+				entity.EnabledStateComponentChangedEvent -= OnEnabledStateComponentChangedEvent;
 				entity.AddedComponentEvent -= OnComponentAddedEvent;
 				entity.RemovedComponentEvent -= OnComponentRemovedEvent;
 				EntityUntrackedEvent?.Invoke(entity);
@@ -106,6 +108,11 @@ namespace RasofiaGames.SimplyECS
 		private void OnDestroyEvent(Entity destroyedEntity)
 		{
 			Unregister(destroyedEntity);
+		}
+
+		private void OnEnabledStateComponentChangedEvent(Entity entity, EntityComponent entityComponent)
+		{
+			EntityComponentEnabledStateChangedEvent?.Invoke(entity, entityComponent);
 		}
 
 		private void OnComponentAddedEvent(Entity entity, EntityComponent component)
@@ -130,6 +137,7 @@ namespace RasofiaGames.SimplyECS
 			{
 				_entities.Add(entity);
 				entity.DestroyEvent += OnDestroyEvent;
+				entity.EnabledStateComponentChangedEvent += OnEnabledStateComponentChangedEvent;
 				entity.AddedComponentEvent += OnComponentAddedEvent;
 				entity.RemovedComponentEvent += OnComponentRemovedEvent;
 				EntityTrackedEvent?.Invoke(entity);
